@@ -1,3 +1,5 @@
 .idea
 .generators
+.byebug_history
 tmp/*
+*.sqlite*
