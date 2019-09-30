@@ -1,0 +1,922 @@
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "goals"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE TABLE "goals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer NOT NULL, "team_id" integer NOT NULL, "type" varchar DEFAULT 'goal' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (8.1ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_match_id" ON "goals" ("match_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_team_id" ON "goals" ("team_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_type" ON "goals" ("type")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "groups"[0m
+  ↳ db/schema.rb:26
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "groups" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:26
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE  INDEX "index_groups_on_tournament_id" ON "groups" ("tournament_id")[0m
+  ↳ db/schema.rb:26
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "groups_teams"[0m
+  ↳ db/schema.rb:34
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "groups_teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer NOT NULL, "team_id" integer NOT NULL)[0m
+  ↳ db/schema.rb:34
+  [1m[35m (7.7ms)[0m  [1m[35mCREATE  INDEX "index_groups_teams_on_group_id" ON "groups_teams" ("group_id")[0m
+  ↳ db/schema.rb:34
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE  INDEX "index_groups_teams_on_team_id" ON "groups_teams" ("team_id")[0m
+  ↳ db/schema.rb:34
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "matches"[0m
+  ↳ db/schema.rb:41
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "matches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "group_id" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:41
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE  INDEX "index_matches_on_group_id" ON "matches" ("group_id")[0m
+  ↳ db/schema.rb:41
+  [1m[35m (16.5ms)[0m  [1m[35mCREATE  INDEX "index_matches_on_tournament_id" ON "matches" ("tournament_id")[0m
+  ↳ db/schema.rb:41
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "teams"[0m
+  ↳ db/schema.rb:50
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:50
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "teams_tournaments"[0m
+  ↳ db/schema.rb:56
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE TABLE "teams_tournaments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "team_id" integer NOT NULL)[0m
+  ↳ db/schema.rb:56
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE  INDEX "index_teams_tournaments_on_team_id" ON "teams_tournaments" ("team_id")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE  INDEX "index_teams_tournaments_on_tournament_id" ON "teams_tournaments" ("tournament_id")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "tournaments"[0m
+  ↳ db/schema.rb:63
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "tournaments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:63
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (6.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190930160159)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (8.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-09-30 19:17:12.524121"], ["updated_at", "2019-09-30 19:17:12.524121"]]
+  ↳ db/schema.rb:13
+  [1m[35m (5.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "goals"[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "goals" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "match_id" integer NOT NULL, "team_id" integer NOT NULL, "type" varchar DEFAULT 'goal' NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:15
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_match_id" ON "goals" ("match_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_team_id" ON "goals" ("team_id")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE  INDEX "index_goals_on_type" ON "goals" ("type")[0m
+  ↳ db/schema.rb:15
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "groups"[0m
+  ↳ db/schema.rb:26
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "groups" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:26
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE  INDEX "index_groups_on_tournament_id" ON "groups" ("tournament_id")[0m
+  ↳ db/schema.rb:26
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "groups_teams"[0m
+  ↳ db/schema.rb:34
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "groups_teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "group_id" integer NOT NULL, "team_id" integer NOT NULL)[0m
+  ↳ db/schema.rb:34
+  [1m[35m (6.9ms)[0m  [1m[35mCREATE  INDEX "index_groups_teams_on_group_id" ON "groups_teams" ("group_id")[0m
+  ↳ db/schema.rb:34
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE  INDEX "index_groups_teams_on_team_id" ON "groups_teams" ("team_id")[0m
+  ↳ db/schema.rb:34
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "matches"[0m
+  ↳ db/schema.rb:41
+  [1m[35m (7.9ms)[0m  [1m[35mCREATE TABLE "matches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "group_id" integer NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:41
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE  INDEX "index_matches_on_group_id" ON "matches" ("group_id")[0m
+  ↳ db/schema.rb:41
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE  INDEX "index_matches_on_tournament_id" ON "matches" ("tournament_id")[0m
+  ↳ db/schema.rb:41
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "teams"[0m
+  ↳ db/schema.rb:50
+  [1m[35m (7.5ms)[0m  [1m[35mCREATE TABLE "teams" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:50
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "teams_tournaments"[0m
+  ↳ db/schema.rb:56
+  [1m[35m (9.7ms)[0m  [1m[35mCREATE TABLE "teams_tournaments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "tournament_id" integer NOT NULL, "team_id" integer NOT NULL)[0m
+  ↳ db/schema.rb:56
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE  INDEX "index_teams_tournaments_on_team_id" ON "teams_tournaments" ("team_id")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE  INDEX "index_teams_tournaments_on_tournament_id" ON "teams_tournaments" ("tournament_id")[0m
+  ↳ db/schema.rb:56
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "tournaments"[0m
+  ↳ db/schema.rb:63
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE TABLE "tournaments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:63
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ db/schema.rb:13
+  [1m[35m (5.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20190930160159)[0m
+  ↳ db/schema.rb:13
+  [1m[35m (7.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ db/schema.rb:13
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-09-30 19:17:12.752846"], ["updated_at", "2019-09-30 19:17:12.752846"]]
+  ↳ db/schema.rb:13
+  [1m[35m (5.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/schema.rb:13
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[36mActiveRecord::InternalMetadata Update (0.5ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = ?, "updated_at" = ? WHERE "ar_internal_metadata"."key" = ?[0m  [["value", "test"], ["updated_at", "2019-09-30 19:17:12.763239"], ["key", "environment"]]
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (5.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/seeds.rb:4
+  [1m[36mTournament Create (0.2ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA Super Cup"], ["created_at", "2019-09-30 19:17:12.801549"], ["updated_at", "2019-09-30 19:17:12.801549"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTournament Create (0.1ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA Nations League"], ["created_at", "2019-09-30 19:17:12.802638"], ["updated_at", "2019-09-30 19:17:12.802638"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTournament Create (0.1ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA European Championship"], ["created_at", "2019-09-30 19:17:12.803306"], ["updated_at", "2019-09-30 19:17:12.803306"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Ajax (NED)"], ["created_at", "2019-09-30 19:17:12.811165"], ["updated_at", "2019-09-30 19:17:12.811165"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Atalanta (ITA)"], ["created_at", "2019-09-30 19:17:12.811828"], ["updated_at", "2019-09-30 19:17:12.811828"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Barcelona (ESP)"], ["created_at", "2019-09-30 19:17:12.812318"], ["updated_at", "2019-09-30 19:17:12.812318"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Benfica (POR)"], ["created_at", "2019-09-30 19:17:12.812805"], ["updated_at", "2019-09-30 19:17:12.812805"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chelsea (ENG)"], ["created_at", "2019-09-30 19:17:12.813309"], ["updated_at", "2019-09-30 19:17:12.813309"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Club Brugge (BEL)"], ["created_at", "2019-09-30 19:17:12.813801"], ["updated_at", "2019-09-30 19:17:12.813801"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dinamo Zagreb (CRO)"], ["created_at", "2019-09-30 19:17:12.814313"], ["updated_at", "2019-09-30 19:17:12.814313"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dortmund (GER)"], ["created_at", "2019-09-30 19:17:12.814791"], ["updated_at", "2019-09-30 19:17:12.814791"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Galatasaray (TUR)"], ["created_at", "2019-09-30 19:17:12.815232"], ["updated_at", "2019-09-30 19:17:12.815232"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Genk (BEL)"], ["created_at", "2019-09-30 19:17:12.815652"], ["updated_at", "2019-09-30 19:17:12.815652"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Internazionale (ITA)"], ["created_at", "2019-09-30 19:17:12.816071"], ["updated_at", "2019-09-30 19:17:12.816071"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Juventus (ITA)"], ["created_at", "2019-09-30 19:17:12.816490"], ["updated_at", "2019-09-30 19:17:12.816490"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Liverpool (ENG)"], ["created_at", "2019-09-30 19:17:12.816915"], ["updated_at", "2019-09-30 19:17:12.816915"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lokomotiv Moskva (RUS)"], ["created_at", "2019-09-30 19:17:12.817370"], ["updated_at", "2019-09-30 19:17:12.817370"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Man. City (ENG)"], ["created_at", "2019-09-30 19:17:12.817792"], ["updated_at", "2019-09-30 19:17:12.817792"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Napoli (ITA)"], ["created_at", "2019-09-30 19:17:12.818214"], ["updated_at", "2019-09-30 19:17:12.818214"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Olympiacos (GRE)"], ["created_at", "2019-09-30 19:17:12.818647"], ["updated_at", "2019-09-30 19:17:12.818647"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Paris (FRA)"], ["created_at", "2019-09-30 19:17:12.819087"], ["updated_at", "2019-09-30 19:17:12.819087"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Real Madrid (ESP)"], ["created_at", "2019-09-30 19:17:12.819502"], ["updated_at", "2019-09-30 19:17:12.819502"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Salzburg (AUT)"], ["created_at", "2019-09-30 19:17:12.819940"], ["updated_at", "2019-09-30 19:17:12.819940"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Shakhtar Donetsk (UKR)"], ["created_at", "2019-09-30 19:17:12.820353"], ["updated_at", "2019-09-30 19:17:12.820353"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Tottenham (ENG)"], ["created_at", "2019-09-30 19:17:12.820748"], ["updated_at", "2019-09-30 19:17:12.820748"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Valencia (ESP)"], ["created_at", "2019-09-30 19:17:12.821153"], ["updated_at", "2019-09-30 19:17:12.821153"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Zenit (RUS)"], ["created_at", "2019-09-30 19:17:12.821569"], ["updated_at", "2019-09-30 19:17:12.821569"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 1]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 3]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 22]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 16]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 19]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 17]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 10]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 12]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 13]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 8]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 21]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 5]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 23]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 4]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 18]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 7]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 1], ["team_id", 24]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 1], ["title", "Division A"], ["created_at", "2019-09-30 19:17:12.853196"], ["updated_at", "2019-09-30 19:17:12.853196"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 3]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 22]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 16]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 19]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 17]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 10]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 12]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 1], ["team_id", 13]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 1], ["title", "Division B"], ["created_at", "2019-09-30 19:17:12.859165"], ["updated_at", "2019-09-30 19:17:12.859165"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 8]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 21]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 5]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 23]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 4]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 18]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 7]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 2], ["team_id", 24]]
+  ↳ db/seeds.rb:51
+  [1m[36mTeam Load (0.0ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 2]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 6]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 3]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 22]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 15]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 17]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 5]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 18]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 10]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 14]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 21]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 4]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 20]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 13]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 9]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 23]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 2], ["team_id", 2]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 2], ["title", "Division A"], ["created_at", "2019-09-30 19:17:12.874596"], ["updated_at", "2019-09-30 19:17:12.874596"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 6]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 3]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 22]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 15]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 17]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 5]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 18]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 3], ["team_id", 10]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 2], ["title", "Division B"], ["created_at", "2019-09-30 19:17:12.880121"], ["updated_at", "2019-09-30 19:17:12.880121"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 14]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 21]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 4]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 20]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 13]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 9]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 23]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 4], ["team_id", 2]]
+  ↳ db/seeds.rb:51
+  [1m[36mTeam Load (0.0ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 3]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 5]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 18]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 12]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 3]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 13]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 10]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 2]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 24]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 11]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 19]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 16]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 6]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 9]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 7]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 8]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 3], ["team_id", 23]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 3], ["title", "Division A"], ["created_at", "2019-09-30 19:17:12.897472"], ["updated_at", "2019-09-30 19:17:12.897472"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 5]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 18]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 12]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 3]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 13]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 10]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 2]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 5], ["team_id", 24]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 3], ["title", "Division B"], ["created_at", "2019-09-30 19:17:12.903276"], ["updated_at", "2019-09-30 19:17:12.903276"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 11]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 19]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 16]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 6]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 9]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 7]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 8]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 6], ["team_id", 23]]
+  ↳ db/seeds.rb:51
+  [1m[35m (5.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/seeds.rb:4
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/bin/rake:23
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/seeds.rb:4
+  [1m[36mTournament Create (0.2ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA Super Cup"], ["created_at", "2019-09-30 19:17:13.713261"], ["updated_at", "2019-09-30 19:17:13.713261"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTournament Create (0.0ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA Nations League"], ["created_at", "2019-09-30 19:17:13.714400"], ["updated_at", "2019-09-30 19:17:13.714400"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTournament Create (0.0ms)[0m  [1m[32mINSERT INTO "tournaments" ("title", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["title", "UEFA European Championship"], ["created_at", "2019-09-30 19:17:13.714827"], ["updated_at", "2019-09-30 19:17:13.714827"]]
+  ↳ db/seeds.rb:11
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Ajax (NED)"], ["created_at", "2019-09-30 19:17:13.720381"], ["updated_at", "2019-09-30 19:17:13.720381"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.1ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Atalanta (ITA)"], ["created_at", "2019-09-30 19:17:13.720940"], ["updated_at", "2019-09-30 19:17:13.720940"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Barcelona (ESP)"], ["created_at", "2019-09-30 19:17:13.721338"], ["updated_at", "2019-09-30 19:17:13.721338"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Benfica (POR)"], ["created_at", "2019-09-30 19:17:13.721738"], ["updated_at", "2019-09-30 19:17:13.721738"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Chelsea (ENG)"], ["created_at", "2019-09-30 19:17:13.722123"], ["updated_at", "2019-09-30 19:17:13.722123"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Club Brugge (BEL)"], ["created_at", "2019-09-30 19:17:13.722512"], ["updated_at", "2019-09-30 19:17:13.722512"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dinamo Zagreb (CRO)"], ["created_at", "2019-09-30 19:17:13.722903"], ["updated_at", "2019-09-30 19:17:13.722903"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Dortmund (GER)"], ["created_at", "2019-09-30 19:17:13.723292"], ["updated_at", "2019-09-30 19:17:13.723292"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Galatasaray (TUR)"], ["created_at", "2019-09-30 19:17:13.723682"], ["updated_at", "2019-09-30 19:17:13.723682"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Genk (BEL)"], ["created_at", "2019-09-30 19:17:13.724130"], ["updated_at", "2019-09-30 19:17:13.724130"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Internazionale (ITA)"], ["created_at", "2019-09-30 19:17:13.724508"], ["updated_at", "2019-09-30 19:17:13.724508"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Juventus (ITA)"], ["created_at", "2019-09-30 19:17:13.724901"], ["updated_at", "2019-09-30 19:17:13.724901"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Liverpool (ENG)"], ["created_at", "2019-09-30 19:17:13.725302"], ["updated_at", "2019-09-30 19:17:13.725302"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Lokomotiv Moskva (RUS)"], ["created_at", "2019-09-30 19:17:13.725693"], ["updated_at", "2019-09-30 19:17:13.725693"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Man. City (ENG)"], ["created_at", "2019-09-30 19:17:13.726100"], ["updated_at", "2019-09-30 19:17:13.726100"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Napoli (ITA)"], ["created_at", "2019-09-30 19:17:13.726480"], ["updated_at", "2019-09-30 19:17:13.726480"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Olympiacos (GRE)"], ["created_at", "2019-09-30 19:17:13.726873"], ["updated_at", "2019-09-30 19:17:13.726873"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Paris (FRA)"], ["created_at", "2019-09-30 19:17:13.727267"], ["updated_at", "2019-09-30 19:17:13.727267"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Real Madrid (ESP)"], ["created_at", "2019-09-30 19:17:13.727656"], ["updated_at", "2019-09-30 19:17:13.727656"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Salzburg (AUT)"], ["created_at", "2019-09-30 19:17:13.728113"], ["updated_at", "2019-09-30 19:17:13.728113"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Shakhtar Donetsk (UKR)"], ["created_at", "2019-09-30 19:17:13.728491"], ["updated_at", "2019-09-30 19:17:13.728491"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Tottenham (ENG)"], ["created_at", "2019-09-30 19:17:13.728884"], ["updated_at", "2019-09-30 19:17:13.728884"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Valencia (ESP)"], ["created_at", "2019-09-30 19:17:13.729279"], ["updated_at", "2019-09-30 19:17:13.729279"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Create (0.0ms)[0m  [1m[32mINSERT INTO "teams" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "Zenit (RUS)"], ["created_at", "2019-09-30 19:17:13.729670"], ["updated_at", "2019-09-30 19:17:13.729670"]]
+  ↳ db/seeds.rb:39
+  [1m[36mTeam Load (0.1ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 4]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 32]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 25]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 34]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 46]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 37]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 45]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 27]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 47]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 44]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 36]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 33]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 39]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 38]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 31]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 29]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 4], ["team_id", 43]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 4], ["title", "Division A"], ["created_at", "2019-09-30 19:17:13.757706"], ["updated_at", "2019-09-30 19:17:13.757706"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 32]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 25]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 34]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 46]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 37]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 45]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 27]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 7], ["team_id", 47]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 4], ["title", "Division B"], ["created_at", "2019-09-30 19:17:13.763071"], ["updated_at", "2019-09-30 19:17:13.763071"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 44]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 36]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 33]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 39]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 38]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 31]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 29]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 8], ["team_id", 43]]
+  ↳ db/seeds.rb:51
+  [1m[36mTeam Load (0.0ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 5]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 26]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 40]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 46]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 32]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 39]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 33]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 30]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 25]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 27]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 36]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 35]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 29]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 28]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 43]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 37]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 5], ["team_id", 45]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 5], ["title", "Division A"], ["created_at", "2019-09-30 19:17:13.777723"], ["updated_at", "2019-09-30 19:17:13.777723"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 26]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 40]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 46]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 32]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 39]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 33]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 30]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 9], ["team_id", 25]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.1ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 5], ["title", "Division B"], ["created_at", "2019-09-30 19:17:13.782825"], ["updated_at", "2019-09-30 19:17:13.782825"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 27]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 36]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 35]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 29]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 28]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 43]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 37]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 10], ["team_id", 45]]
+  ↳ db/seeds.rb:51
+  [1m[36mTeam Load (0.0ms)[0m  [1m[34mSELECT "teams".* FROM "teams" INNER JOIN "teams_tournaments" ON "teams"."id" = "teams_tournaments"."team_id" WHERE "teams_tournaments"."tournament_id" = ?[0m  [["tournament_id", 6]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 34]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 47]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 36]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 28]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 31]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 46]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 45]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 48]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 44]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 27]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 30]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 33]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 37]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 40]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 42]]
+  ↳ db/seeds.rb:42
+  [1m[36mTournament::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "teams_tournaments" ("tournament_id", "team_id") VALUES (?, ?)[0m  [["tournament_id", 6], ["team_id", 35]]
+  ↳ db/seeds.rb:42
+  [1m[36mGroup Create (0.0ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 6], ["title", "Division A"], ["created_at", "2019-09-30 19:17:13.796875"], ["updated_at", "2019-09-30 19:17:13.796875"]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 34]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 47]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 36]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 28]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 31]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 46]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 45]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 11], ["team_id", 48]]
+  ↳ db/seeds.rb:45
+  [1m[36mGroup Create (0.0ms)[0m  [1m[32mINSERT INTO "groups" ("tournament_id", "title", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tournament_id", 6], ["title", "Division B"], ["created_at", "2019-09-30 19:17:13.801842"], ["updated_at", "2019-09-30 19:17:13.801842"]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 44]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 27]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 30]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 33]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 37]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 40]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.0ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 42]]
+  ↳ db/seeds.rb:51
+  [1m[36mGroup::HABTM_Teams Create (0.1ms)[0m  [1m[32mINSERT INTO "groups_teams" ("group_id", "team_id") VALUES (?, ?)[0m  [["group_id", 12], ["team_id", 35]]
+  ↳ db/seeds.rb:51
+  [1m[35m (5.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/seeds.rb:4
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:08 +0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/activerecord-5.2.3/lib/active_record/log_subscriber.rb:98
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (1.3ms)
+Completed 200 OK in 6ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:30 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.4ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:42 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.7ms)
+Completed 200 OK in 11ms (Views: 8.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:42 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.3ms)
+Completed 200 OK in 10ms (Views: 7.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:43 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (4.9ms)
+Completed 200 OK in 10ms (Views: 7.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:43 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.3ms)
+Completed 200 OK in 11ms (Views: 7.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:20:49 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (1.1ms)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:25:57 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.7ms)
+Completed 200 OK in 11ms (Views: 7.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:26:03 +0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/activerecord-5.2.3/lib/active_record/log_subscriber.rb:98
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (1.3ms)
+Completed 200 OK in 6ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:27:24 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (1.2ms)
+Completed 200 OK in 4ms (Views: 1.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:27:25 +0600
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/ksimmi/.rbenv/versions/2.5.6/lib/ruby/gems/2.5.0/gems/railties-5.2.3/lib/rails/templates/rails/welcome/index.html.erb (5.2ms)
+Completed 200 OK in 10ms (Views: 7.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:29:38 +0600
+  
+ActionController::RoutingError (uninitialized constant WelcomeController):
+  
+bootsnap (1.4.5) lib/bootsnap/load_path_cache/core_ext/active_support.rb:79:in `block in load_missing_constant'
+bootsnap (1.4.5) lib/bootsnap/load_path_cache/core_ext/active_support.rb:8:in `without_bootsnap_cache'
+bootsnap (1.4.5) lib/bootsnap/load_path_cache/core_ext/active_support.rb:79:in `rescue in load_missing_constant'
+bootsnap (1.4.5) lib/bootsnap/load_path_cache/core_ext/active_support.rb:58:in `load_missing_constant'
+activesupport (5.2.3) lib/active_support/inflector/methods.rb:283:in `const_get'
+activesupport (5.2.3) lib/active_support/inflector/methods.rb:283:in `block in constantize'
+activesupport (5.2.3) lib/active_support/inflector/methods.rb:281:in `each'
+activesupport (5.2.3) lib/active_support/inflector/methods.rb:281:in `inject'
+activesupport (5.2.3) lib/active_support/inflector/methods.rb:281:in `constantize'
+actionpack (5.2.3) lib/action_dispatch/http/request.rb:88:in `controller_class_for'
+actionpack (5.2.3) lib/action_dispatch/http/request.rb:81:in `controller_class'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:46:in `controller'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:52:in `block in serve'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:35:in `each'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:35:in `serve'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:840:in `call'
+rack (2.0.7) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.0.7) lib/rack/etag.rb:25:in `call'
+rack (2.0.7) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.7) lib/rack/head.rb:12:in `call'
+actionpack (5.2.3) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.0.7) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.7) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/cookies.rb:670:in `call'
+activerecord (5.2.3) lib/active_record/migration.rb:559:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.3) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.3) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.7) lib/rack/method_override.rb:22:in `call'
+rack (2.0.7) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.7) lib/rack/sendfile.rb:111:in `call'
+railties (5.2.3) lib/rails/engine.rb:524:in `call'
+puma (3.12.1) lib/puma/configuration.rb:227:in `call'
+puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
+puma (3.12.1) lib/puma/server.rb:474:in `process_client'
+puma (3.12.1) lib/puma/server.rb:334:in `block in run'
+puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:30:41 +0600
+Processing by WelcomeController#index as HTML
+Completed 406 Not Acceptable in 18ms (ActiveRecord: 0.0ms)
+
+
+  
+ActionController::UnknownFormat (WelcomeController#index is missing a template for this request format and variant.
+
+request.formats: ["text/html"]
+request.variant: []
+
+NOTE! For XHR/Ajax or API requests, this action would normally respond with 204 No Content: an empty white screen. Since you're loading it in a web browser, we assume that you expected to actually render a template, not nothing, so we're showing an error to be extra-clear. If you expect 204 No Content, carry on. That's what you'll get from an XHR or API request. Give it a shot.):
+  
+actionpack (5.2.3) lib/action_controller/metal/implicit_render.rb:55:in `default_render'
+actionpack (5.2.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `block in send_action'
+actionpack (5.2.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `tap'
+actionpack (5.2.3) lib/action_controller/metal/basic_implicit_render.rb:6:in `send_action'
+actionpack (5.2.3) lib/abstract_controller/base.rb:194:in `process_action'
+actionpack (5.2.3) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.2.3) lib/abstract_controller/callbacks.rb:42:in `block in process_action'
+activesupport (5.2.3) lib/active_support/callbacks.rb:132:in `run_callbacks'
+actionpack (5.2.3) lib/abstract_controller/callbacks.rb:41:in `process_action'
+actionpack (5.2.3) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (5.2.3) lib/action_controller/metal/instrumentation.rb:34:in `block in process_action'
+activesupport (5.2.3) lib/active_support/notifications.rb:168:in `block in instrument'
+activesupport (5.2.3) lib/active_support/notifications/instrumenter.rb:23:in `instrument'
+activesupport (5.2.3) lib/active_support/notifications.rb:168:in `instrument'
+actionpack (5.2.3) lib/action_controller/metal/instrumentation.rb:32:in `process_action'
+actionpack (5.2.3) lib/action_controller/metal/params_wrapper.rb:256:in `process_action'
+activerecord (5.2.3) lib/active_record/railties/controller_runtime.rb:24:in `process_action'
+actionpack (5.2.3) lib/abstract_controller/base.rb:134:in `process'
+actionview (5.2.3) lib/action_view/rendering.rb:32:in `process'
+actionpack (5.2.3) lib/action_controller/metal.rb:191:in `dispatch'
+actionpack (5.2.3) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:52:in `dispatch'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:34:in `serve'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:52:in `block in serve'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:35:in `each'
+actionpack (5.2.3) lib/action_dispatch/journey/router.rb:35:in `serve'
+actionpack (5.2.3) lib/action_dispatch/routing/route_set.rb:840:in `call'
+rack (2.0.7) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.0.7) lib/rack/etag.rb:25:in `call'
+rack (2.0.7) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.7) lib/rack/head.rb:12:in `call'
+actionpack (5.2.3) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.0.7) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.7) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/cookies.rb:670:in `call'
+activerecord (5.2.3) lib/active_record/migration.rb:559:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+activesupport (5.2.3) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (5.2.3) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/debug_exceptions.rb:61:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.7) lib/rack/method_override.rb:22:in `call'
+rack (2.0.7) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.7) lib/rack/sendfile.rb:111:in `call'
+railties (5.2.3) lib/rails/engine.rb:524:in `call'
+puma (3.12.1) lib/puma/configuration.rb:227:in `call'
+puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
+puma (3.12.1) lib/puma/server.rb:474:in `process_client'
+puma (3.12.1) lib/puma/server.rb:334:in `block in run'
+puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:31:02 +0600
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.slim within layouts/application
+  Rendered welcome/index.slim within layouts/application (18.7ms)
+Completed 200 OK in 982ms (Views: 979.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-10-01 01:31:30 +0600
+Processing by WelcomeController#index as HTML
+  Rendering welcome/index.slim within layouts/application
+  Rendered welcome/index.slim within layouts/application (4.6ms)
+Completed 200 OK in 36ms (Views: 33.9ms | ActiveRecord: 0.0ms)
+
+
