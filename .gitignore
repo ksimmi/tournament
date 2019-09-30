@@ -1,5 +1,6 @@
 .idea
 .generators
 .byebug_history
-tmp/*
 *.sqlite*
+tmp/*
+logs/*
