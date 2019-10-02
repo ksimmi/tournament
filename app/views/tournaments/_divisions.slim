@@ -1,0 +1,8 @@
+- while divisions.any?
+  - lft_col_division, rgt_col_division, *divisions = divisions
+  .row
+    .col-6
+      = render partial: 'division', locals: { division: lft_col_division }
+    .col-6
+      = render partial: 'division', locals: { division: rgt_col_division }
+

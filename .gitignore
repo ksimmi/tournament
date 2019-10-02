@@ -2,5 +2,5 @@
 .generators
 .byebug_history
 *.sqlite*
-tmp/*
-logs/*
+tmp/.*
+log/.*

@@ -1,0 +1,9 @@
+h1 Tournaments
+
+- unless @tournaments
+  | Sorry, is not any information about tournaments
+
+- else
+  - @tournaments.each do |tournament|
+    h3
+      = link_to tournament.title, tournament
