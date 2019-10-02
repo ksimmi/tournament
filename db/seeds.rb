@@ -42,13 +42,13 @@ ActiveRecord::Base.transaction do
     tournament.teams = teams.shuffle.take(TOURNAMENT_TEAMS_COUNT)
     division_a_teams, division_b_teams = tournament.teams.each_slice(DIVISION_TEAMS_COUNT).to_a
 
-    division_a = Group.create(
+    division_a = Group::Division.create(
       title: 'Division A',
       tournament: tournament,
       teams: division_a_teams
     )
 
-    division_b = Group.create(
+    division_b = Group::Division.create(
       title: 'Division B',
       tournament: tournament,
       teams: division_b_teams
