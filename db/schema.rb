@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_181358) do
+ActiveRecord::Schema.define(version: 2019_10_02_205930) do
 
   create_table "goals", force: :cascade do |t|
     t.integer "match_id", null: false
     t.integer "team_id", null: false
-    t.string "type", default: "goal", null: false
+    t.string "kind", default: "goal", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["kind"], name: "index_goals_on_kind"
     t.index ["match_id"], name: "index_goals_on_match_id"
     t.index ["team_id"], name: "index_goals_on_team_id"
-    t.index ["type"], name: "index_goals_on_type"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_181358) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type"
+    t.string "status", default: "new"
     t.index ["tournament_id"], name: "index_groups_on_tournament_id"
   end
 
@@ -46,6 +47,8 @@ ActiveRecord::Schema.define(version: 2019_10_02_181358) do
     t.datetime "updated_at", null: false
     t.integer "home_team_id"
     t.integer "away_team_id"
+    t.integer "home_team_score"
+    t.integer "away_team_score"
     t.index ["group_id"], name: "index_matches_on_group_id"
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
