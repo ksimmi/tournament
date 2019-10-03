@@ -1,7 +1,10 @@
 - if division
   h5
     ' #{division.title}
-    a href="#" class="btn btn-outline-primary btn-sm" Get Result
+    - if division.played_out?
+      span class="badge badge-info" All matches are played
+    - else
+      = link_to "Play matches", play_matches_group_path(id: division.id), class: "btn btn-outline-primary btn-sm"
 
   table class="table table-striped"
     thead
@@ -14,4 +17,9 @@
         tr scope="row"
           td
             = team.name
-          td class="text-center" &ndash;
+          td class="text-center"
+            - if division.played_out?
+              - rank = division.team_ranks.find { |tr| tr[:team_id] == team.id }
+              = rank[:rank_value]
+            - else
+              ' &ndash;
