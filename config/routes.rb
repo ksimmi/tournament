@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :groups, only: [] do
     member do
       get 'play_matches'
+      get 'show_scores'
     end
   end
 end

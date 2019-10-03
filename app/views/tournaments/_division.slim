@@ -2,7 +2,13 @@
   h5
     ' #{division.title}
     - if division.played_out?
-      span class="badge badge-info" All matches are played
+
+      span class="badge badge-info"
+        ' All matches are played
+
+      small class="text-muted"
+        = link_to ' Show scores', show_scores_group_path(id: division.id)
+
     - else
       = link_to "Play matches", play_matches_group_path(id: division.id), class: "btn btn-outline-primary btn-sm"
 
@@ -18,8 +24,4 @@
           td
             = team.name
           td class="text-center"
-            / - if division.played_out?
-            /   - rank = division.team_ranks.find { |tr| tr[:team_id] == team.id }
-            /   = rank[:rank_value]
-            / - else
-            /   ' &ndash;
+            = division.team_ranks.to_h[team.id].to_s

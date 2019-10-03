@@ -28,7 +28,7 @@ module Operations
         end
       end
 
-      @team_pairs.uniq!
+      @team_pairs = @team_pairs.shuffle.uniq
     end
 
     def play_matches

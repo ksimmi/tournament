@@ -1,0 +1,21 @@
+h1
+  ' #{group.title} scores
+.row
+  .col-6
+    table class='table table-striped'
+      - matches.each do |m|
+        tr
+          td class="text-right"
+            = m.team_1.name
+          td class="text-center"
+            ' #{ m.team_1_score > m.team_2_score ? '>' : (m.team_1_score < m.team_2_score ? '<' : '=') }
+          td class="text-left"
+            = m.team_2.name
+
+        tr
+          td class="text-right"
+            = m.team_1_score
+          td class="text-center"
+            ' :
+          td class="text-left"
+            = m.team_2_score
