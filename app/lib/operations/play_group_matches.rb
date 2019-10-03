@@ -44,7 +44,7 @@ module Operations
           team_2: team_2
       ).call
 
-      match = Match.create(
+      match = Match.create!(
         team_1_id: team_1.id,
         team_2_id: team_2.id,
         team_1_score: match_result.team_1_score,
@@ -55,7 +55,7 @@ module Operations
 
       goals = match_result.goals.each do |goal|
         goal[:match_id] = match.id
-        Goal.create(goal)
+        Goal.create!(goal)
       end
     end
 
