@@ -45,7 +45,7 @@ ActiveRecord::Base.transaction do
     division_a = Group::Division.create(
       title: 'Division A',
       tournament: tournament,
-      teams: division_a_teams
+      teams: division_a_teams,
     )
 
     division_b = Group::Division.create(

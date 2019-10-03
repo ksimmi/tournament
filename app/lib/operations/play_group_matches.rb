@@ -1,3 +1,5 @@
+require 'set'
+
 module Operations
   class PlayGroupMatches
 
@@ -7,6 +9,7 @@ module Operations
 
     def call()
       ActiveRecord::Base.transaction do
+        build_team_pairs
         play_matches
         close_group
       end
@@ -14,15 +17,24 @@ module Operations
 
     private
 
-    def play_matches
-      @matches = []
-      @goals = []
-      @group.teams.each do |home_team|
-        @group.teams.each do |away_team|
-          unless home_team == away_team
-            play_match(team_1: home_team, team_2: away_team)
+    def build_team_pairs
+      @team_pairs = []
+
+      @group.teams.each do |team_1|
+        @group.teams.each do |team_2|
+          unless team_1 == team_2
+            @team_pairs << Set[team_1, team_2]
           end
         end
+      end
+
+      @team_pairs.uniq!
+    end
+
+    def play_matches
+      @team_pairs.each do |team_pair|
+        team_1, team_2 = team_pair.to_a
+        play_match(team_1: team_1, team_2: team_2)
       end
     end
 
@@ -33,10 +45,10 @@ module Operations
       ).call
 
       match = Match.create(
-        home_team_id: team_1.id,
-        away_team_id: team_2.id,
-        home_team_score: match_result.team_1_score,
-        away_team_score: match_result.team_2_score,
+        team_1_id: team_1.id,
+        team_2_id: team_2.id,
+        team_1_score: match_result.team_1_score,
+        team_2_score: match_result.team_2_score,
         group_id: @group.id,
         tournament_id: @group.tournament_id,
       )

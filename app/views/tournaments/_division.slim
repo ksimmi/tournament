@@ -18,8 +18,8 @@
           td
             = team.name
           td class="text-center"
-            - if division.played_out?
-              - rank = division.team_ranks.find { |tr| tr[:team_id] == team.id }
-              = rank[:rank_value]
-            - else
-              ' &ndash;
+            / - if division.played_out?
+            /   - rank = division.team_ranks.find { |tr| tr[:team_id] == team.id }
+            /   = rank[:rank_value]
+            / - else
+            /   ' &ndash;
