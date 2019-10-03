@@ -1,5 +1,5 @@
 module Operations
-  class PlayGroupMatch
+  class PlayMatch
 
     RANGE_OF_POSSIBLE_GOALS_FOR_MAIN_TIME = (0..7)
     RANGE_OF_POSSIBLE_GOALS_FOR_EXTRA_TIME = (0..3)
@@ -7,45 +7,53 @@ module Operations
 
     attr_reader :goals
 
-    def initialize(match:)
-      @match = match
+    def initialize(team_1:, team_2:)
+      @team_1 = team_1
+      @team_2 = team_2
       @goals = []
     end
 
     def call()
-      play_match
+      build_goals
+      self
+    end
+
+    def team_1_score
+      @goals.select { |goal| goal[:team_id] == @team_1.id }.count
+    end
+
+    def team_2_score
+      @goals.select { |goal| goal[:team_id] == @team_2.id }.count
     end
 
     private
 
-    def play_match
+    def build_goals
       play_main_time
+      play_extra_time if is_draw?
+      play_penalties if is_draw?
+    end
 
-      if @match.is_draw?
-        play_extra_time
-      end
-
-      if @match.is_draw?
-        play_penalties
-      end
+    def is_draw?
+      team_1_score == team_2_score
     end
 
     def play_main_time
-      @match.goals = randomize_goals(
+      randomize_goals(
           goal_range: RANGE_OF_POSSIBLE_GOALS_FOR_MAIN_TIME,
           goal_kind: 'goal'
       )
     end
 
     def play_extra_time
-      @match.goals = randomize_goals(
+      randomize_goals(
           goal_range: RANGE_OF_POSSIBLE_GOALS_FOR_EXTRA_TIME,
           goal_kind: 'goal'
       )
     end
 
     def play_penalties
-      @match.goals = randomize_goals(
+      randomize_goals(
           goal_range: RANGE_OF_POSSIBLE_GOALS_FOR_PENALTY_ROUND,
           goal_kind: 'penalty'
       )
@@ -54,8 +62,8 @@ module Operations
     end
 
     def await_winner
-      while @match.is_draw?
-        @match.goals = randomize_goals(
+      while is_draw?
+        randomize_goals(
             goal_range: (0..1),
             goal_kind: 'penalty'
         )
@@ -63,26 +71,22 @@ module Operations
     end
 
     def randomize_goals(goal_range:, goal_kind:)
-      home_goals_count = rand(goal_range)
-      away_goals_count = rand(goal_range)
+      team_1_goals_count = rand(goal_range)
+      team_2_goals_count = rand(goal_range)
 
-      home_goals_count.times do
-        @goals << ::Goal.new(
-            match: @match,
-            team: @match.home_team,
-            kind: goal_kind
-        )
+      team_1_goals_count.times do
+        @goals << {
+          team_id: @team_1.id,
+          kind: goal_kind
+        }
       end
 
-      away_goals_count.times do
-        @goals << ::Goal.new(
-            match: @match,
-            team: @match.away_team,
-            kind: goal_kind
-        )
+      team_2_goals_count.times do
+        @goals << {
+          team_id: @team_2.id,
+          kind: goal_kind
+        }
       end
-
-      @goals
     end
   end
 end
