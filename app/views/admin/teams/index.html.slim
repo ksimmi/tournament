@@ -1,0 +1,22 @@
+h1
+  ' Listing teams
+  small
+    = link_to 'New Team', new_admin_team_path
+
+table class="table"
+  thead
+    tr
+      th Name
+      th
+      th
+
+  tbody
+    - @teams.each do |team|
+      tr
+        td = team.name
+        td = link_to 'Edit', edit_admin_team_path(team)
+        td = link_to 'Destroy', [:admin, team], data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Team', new_admin_team_path

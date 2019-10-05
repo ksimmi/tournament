@@ -1,0 +1,22 @@
+h1
+  ' Listing tournaments
+  small
+    = link_to 'New Tournament', new_admin_tournament_path
+
+table class="table"
+  thead
+    tr
+      th Title
+      th
+      th
+
+  tbody
+    - @tournaments.each do |tournament|
+      tr
+        td = tournament.title
+        td = link_to 'Edit', edit_admin_tournament_path(tournament)
+        td = link_to 'Destroy', [:admin, tournament], data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Tournament', new_admin_tournament_path

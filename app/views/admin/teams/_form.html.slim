@@ -1,0 +1,14 @@
+= form_for [:admin, @team] do |f|
+  - if @team.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@team.errors.count, "error")} prohibited this admin_team from being saved:"
+      ul
+        - @team.errors.full_messages.each do |message|
+          li = message
+
+  div class="form-group row"
+    = f.label :name, class: "col-sm-2 col-form-label"
+    div class="col-sm-10"
+      = f.text_field :name, class: 'form-control'
+
+  = f.submit class: "btn btn-primary"

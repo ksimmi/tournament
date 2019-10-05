@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    root to: 'tournaments#index'
+    resources :tournaments, except: [:show]
+    resources :teams, except: [:show]
+  end
+
   root to: 'tournaments#index'
 
   resources :tournaments, only: [:index, :show]

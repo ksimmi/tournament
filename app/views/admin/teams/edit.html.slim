@@ -1,0 +1,14 @@
+h1 Editing "#{@team.name}" team
+
+br
+.row
+  .col-12
+    == render 'form'
+
+.row
+  .col-12
+    br
+    => link_to 'Show', @admin_team
+    '|
+    =< link_to 'Back', admin_teams_path
+
