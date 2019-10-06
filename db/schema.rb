@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_160159) do
+ActiveRecord::Schema.define(version: 2019_10_06_181738) do
 
   create_table "goals", force: :cascade do |t|
     t.integer "match_id", null: false
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_160159) do
     t.integer "team_2_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "winner_id"
     t.index ["group_id"], name: "index_matches_on_group_id"
     t.index ["team_1_id"], name: "index_matches_on_team_1_id"
     t.index ["team_2_id"], name: "index_matches_on_team_2_id"
