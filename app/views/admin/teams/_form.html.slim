@@ -1,7 +1,8 @@
 = form_for [:admin, @team] do |f|
   - if @team.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@team.errors.count, "error")} prohibited this admin_team from being saved:"
+    div class="alert alert-danger" role="alert"
+      h5
+        = "#{pluralize(@team.errors.count, "error")} prohibited this admin_team from being saved:"
       ul
         - @team.errors.full_messages.each do |message|
           li = message
