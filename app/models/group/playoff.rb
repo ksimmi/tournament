@@ -8,7 +8,7 @@ class Group
     SQL
 
     def matches_for_rank_calculation
-      Match
+      @division_matches ||= Match
           .joins(DIVISION_MATCHES_INNER_JOIN)
           .where(tournament_id: tournament.id)
           .to_a

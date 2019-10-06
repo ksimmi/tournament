@@ -30,13 +30,14 @@
             tr scope="row"
               td
                 = team.name
-                | &nbsp;
-                - if playoff_iteration.won_teams.include?(team)
-                  span class="badge badge-success"
-                    ' won
-                - else
-                  span class="badge badge-danger"
-                    ' out
+                - if playoff_iteration.played_out?
+                  | &nbsp;
+                  - if playoff_iteration.won_teams.include?(team)
+                    span class="badge badge-success"
+                      ' won
+                  - else
+                    span class="badge badge-danger"
+                      ' out
 
               td class="text-center"
                 = team.rank

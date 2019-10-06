@@ -8,9 +8,11 @@ class Group
     end
 
     def matches_for_rank_calculation
-      division_matches = matches.to_a
+      return @division_matches if @division_matches
+      team_ids = teams.map(&:id)
+      @division_matches = matches.to_a.select do |m|
+        [m.team_1_id, m.team_2_id].any? { |tid| team_ids.include?(tid) }
+      end
     end
-
-
   end
 end

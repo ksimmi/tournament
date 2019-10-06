@@ -24,11 +24,14 @@ class Group < ApplicationRecord
   end
 
   def teams_with_ranks
-    teams.each do |team|
+    return @teams_with_ranks if @teams_with_ranks
+
+    @teams_with_ranks = teams.to_a
+    @teams_with_ranks.each do |team|
       team.rank ||= 0
 
       matches_for_rank_calculation.each do |match|
-        unless match.teams.include?(team)
+        unless [match.team_1_id, match.team_2_id].include?(team.id)
           next
         end
 
