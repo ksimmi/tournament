@@ -6,7 +6,7 @@ class Match < ApplicationRecord
   belongs_to :team_2, class_name: 'Team', foreign_key: :team_2_id
 
   def teams
-    Team.where('id in (?, ?)', team_1, team_2).to_a
+    @teams ||= Team.where('id in (?, ?)', team_1, team_2).to_a
   end
 
   def winner?(team)

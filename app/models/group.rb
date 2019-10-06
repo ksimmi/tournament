@@ -9,6 +9,8 @@ class Group < ApplicationRecord
   POINTS_FOR_DRAW = 1
   POINTS_FOR_LOSS = 0
 
+  TEAMS_FOR_PLAYOFF_COUNT = 4
+
   def played_out?
     status == STATUS_PLAYED_OUT
   end
@@ -17,23 +19,27 @@ class Group < ApplicationRecord
     self[:status] = STATUS_PLAYED_OUT
   end
 
-  def team_ranks
-    return @ranks if @ranks
+  def matches_for_rank_calculation
+    []
+  end
 
-    @ranks = {}
+  def teams_with_ranks
     teams.each do |team|
-      @ranks[team.id] ||= 0
+      team.rank ||= 0
 
-      matches.each do |match|
+      matches_for_rank_calculation.each do |match|
+        unless match.teams.include?(team)
+          next
+        end
+
         if match.winner?(team)
-          @ranks[team.id] += POINTS_FOR_WIN
+          team.rank += POINTS_FOR_WIN
         end
 
         if match.draw?
-          @ranks[team.id] += POINTS_FOR_DRAW
+          team.rank += POINTS_FOR_DRAW
         end
       end
     end
-    @ranks
   end
 end

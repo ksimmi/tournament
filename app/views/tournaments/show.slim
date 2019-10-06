@@ -6,5 +6,5 @@ br
 
 = render partial: 'divisions', locals: { divisions: divisions }
 
-- if divisions.all? { |d| d.played_out? }
-  = render partial: 'playoff', locals: { divisions: divisions }
+- unless playoff.nil?
+  = render partial: 'playoff', locals: { playoff: playoff }

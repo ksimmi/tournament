@@ -19,9 +19,10 @@
         th class="text-center" Rank
 
     tbody
-      - division.teams.each do |team|
+      - teams_sorted_desc_by_ranks = division.teams_with_ranks.sort_by { |t| t.rank * -1 }
+      - teams_sorted_desc_by_ranks.each do |team|
         tr scope="row"
           td
             = team.name
           td class="text-center"
-            = division.team_ranks.to_h[team.id].to_s
+            = team.rank

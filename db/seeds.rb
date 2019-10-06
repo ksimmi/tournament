@@ -1,6 +1,3 @@
-TOURNAMENT_TEAMS_COUNT = 16
-DIVISION_TEAMS_COUNT = 8
-
 ActiveRecord::Base.transaction do
 
   tournaments = [
@@ -39,21 +36,21 @@ ActiveRecord::Base.transaction do
   ].map { |team_name| Team.create(name: team_name) }
 
   tournaments.each do |tournament|
-    tournament.teams = teams.shuffle.take(TOURNAMENT_TEAMS_COUNT)
-    division_a_teams, division_b_teams = tournament.teams.each_slice(DIVISION_TEAMS_COUNT).to_a
+    tournament.team_ids = teams.shuffle.take(Tournament::TOURNAMENT_TEAMS_COUNT).map(&:id)
+    # division_a_teams, division_b_teams = tournament.teams.each_slice(Group::Division::DIVISION_TEAMS_COUNT).to_a
 
-    division_a = Group::Division.create(
-      title: 'Division A',
-      tournament: tournament,
-      teams: division_a_teams,
-    )
+    # division_a = Group::Division.create(
+    #   title: 'Division A',
+    #   tournament: tournament,
+    #   teams: division_a_teams,
+    # )
+    #
+    # division_b = Group::Division.create(
+    #   title: 'Division B',
+    #   tournament: tournament,
+    #   teams: division_b_teams
+    # )
 
-    division_b = Group::Division.create(
-      title: 'Division B',
-      tournament: tournament,
-      teams: division_b_teams
-    )
-
-    tournament.save
+    tournament.save(validate:false)
   end
 end

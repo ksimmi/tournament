@@ -2,3 +2,41 @@
   .col-12
     br
     h2 Playoff
+
+    - playoff.each do |playoff_iteration|
+      br
+      h5
+        ' #{playoff_iteration.title}
+        - if playoff_iteration.played_out?
+
+          span class="badge badge-info"
+            ' All matches are played
+
+          small class="text-muted"
+            = link_to ' Show scores', show_scores_group_path(id: playoff_iteration.id)
+
+        - else
+          = link_to "Play matches", play_matches_group_path(id: playoff_iteration.id), class: "btn btn-outline-primary btn-sm"
+
+      table class="table table-striped"
+        thead
+          tr
+            th Team
+            th class="text-center" Rank
+
+        tbody
+          - teams_sorted_desc_by_ranks = playoff_iteration.teams_with_ranks.sort_by { |t| t.rank * -1 }
+          - teams_sorted_desc_by_ranks.each do |team|
+            tr scope="row"
+              td
+                = team.name
+                | &nbsp;
+                - if playoff_iteration.won_teams.include?(team)
+                  span class="badge badge-success"
+                    ' won
+                - else
+                  span class="badge badge-danger"
+                    ' out
+
+              td class="text-center"
+                = team.rank

@@ -3,11 +3,14 @@ class GroupsController < ApplicationController
     group = Group.find(params[:id])
 
     unless group.played_out?
-      ::Operations::PlayGroupMatches.new(
-          group: group
-      ).call
-    end
+      if group.is_a?(Group::Division)
+        ::Operations::PlayDivisionMatches.new(group: group).call
+      end
 
+      if group.is_a?(Group::Playoff)
+        ::Operations::IterateOverPlayoffStages.new(group: group).call
+      end
+    end
 
     redirect_to tournament_path(id: group.tournament_id)
   end
