@@ -26,12 +26,11 @@ class Group < ApplicationRecord
   def teams_with_ranks
     return @teams_with_ranks if @teams_with_ranks
 
-    @teams_with_ranks = teams.to_a
+    @teams_with_ranks = teams.map{ |t| t.rank = 0; t }
     @teams_with_ranks.each do |team|
-      team.rank ||= 0
 
       matches_for_rank_calculation.each do |match|
-        unless [match.team_1_id, match.team_2_id].include?(team.id)
+        unless match.is_participant?(team)
           next
         end
 

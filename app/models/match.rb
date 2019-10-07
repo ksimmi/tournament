@@ -13,6 +13,10 @@ class Match < ApplicationRecord
     team.id == winner_id
   end
 
+  def is_participant?(team)
+    [team_1_id, team_2_id].include?(team.id)
+  end
+
   def draw?
     winner_id.nil?
   end
