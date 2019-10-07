@@ -1,5 +1,5 @@
 class Match < ApplicationRecord
-  has_many :goals
+  has_many :goals, dependent: :destroy
   belongs_to :tournament
   belongs_to :group
   belongs_to :team_1, class_name: 'Team', foreign_key: :team_1_id

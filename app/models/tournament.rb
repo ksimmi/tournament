@@ -1,6 +1,6 @@
 class Tournament < ApplicationRecord
-  has_many :groups
-  has_many :matches
+  has_many :groups, dependent: :destroy
+  has_many :matches, dependent: :destroy
   has_and_belongs_to_many :teams
 
   TOURNAMENT_TEAMS_COUNT = 16
